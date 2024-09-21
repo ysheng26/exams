@@ -31,6 +31,7 @@ impl std::fmt::Display for Unit {
 }
 
 struct Question {
+    id: i32,
     lhs: f32,
     lhs_unit: Unit,
     rhs: f32,
@@ -40,10 +41,12 @@ struct Question {
 impl std::fmt::Display for Question {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         let res = format!(
-            "Question: {} {} = ? {}\nAnswer: {} {} = {} {}",
+            "Question {}: {} {} = ? {}\nAnswer {}: {} {} = {} {}",
+            self.id,
             self.lhs,
             self.lhs_unit,
             self.rhs_unit,
+            self.id,
             self.lhs,
             self.lhs_unit,
             self.rhs,
@@ -53,7 +56,7 @@ impl std::fmt::Display for Question {
     }
 }
 
-fn generate_question(lhs_unit: Unit) -> Question {
+fn generate_question(i: i32, lhs_unit: Unit) -> Question {
     use Unit::*;
     let hashmap = HashMap::from([
         (Meter, Centimetre),
@@ -76,6 +79,7 @@ fn generate_question(lhs_unit: Unit) -> Question {
 
     let rhs_unit = *hashmap.get(&lhs_unit).unwrap();
     Question {
+        id: i,
         lhs,
         lhs_unit,
         rhs,
@@ -86,12 +90,13 @@ fn generate_question(lhs_unit: Unit) -> Question {
 fn main() {
     use Unit::*;
 
-    let xs = vec![Meter, Centimetre, Pound, Ounce, Foot, Inch];
+    // let xs = vec![Meter, Centimetre, Pound, Ounce, Foot, Inch];
+    let xs = vec![Meter, Centimetre];
 
-    for _ in 0..50 {
+    for i in 0..50 {
         let current_unit = xs.choose(&mut rand::thread_rng());
         let current_unit = current_unit.unwrap();
-        let q = generate_question(*current_unit);
+        let q = generate_question(i + 1, *current_unit);
         println!("{}", q);
     }
 }
