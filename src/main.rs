@@ -65,7 +65,6 @@ fn generate_question(lhs_unit: Unit) -> Question {
     ]);
     let lhs = rand::thread_rng().gen_range(0..100) as f32;
 
-    // let mut rhs = 0;
     let rhs = match &lhs_unit {
         Meter => lhs * 100.0,
         Centimetre => lhs / 100.0,
