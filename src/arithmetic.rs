@@ -80,11 +80,11 @@ fn get_number(start: f32, end: f32, decimal_plates: u32) -> f32 {
     num
 }
 
-pub(crate) fn add_questions(qs: &mut Vec<Box<dyn Question>>) {
+pub(crate) fn add_questions(qs: &mut Vec<Box<dyn Question>>, num_of_questions: u32) {
     use Operator::*;
     // let xs = vec![Plus, Minus, Multiply, Divide];
     let xs = vec![Plus, Minus];
-    for _ in 0..50 {
+    for _ in 0..num_of_questions {
         let current_operator = xs.choose(&mut rand::thread_rng());
         let current_operator = current_operator.unwrap();
 

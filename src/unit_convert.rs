@@ -88,11 +88,11 @@ impl UnitConvertQuestion {
     }
 }
 
-pub(crate) fn add_questions(qs: &mut Vec<Box<dyn Question>>) {
+pub(crate) fn add_questions(qs: &mut Vec<Box<dyn Question>>, num_of_questions: i32) {
     use Unit::*;
     // let xs = vec![Meter, Centimetre, Pound, Ounce, Foot, Inch];
     let xs = vec![Meter, Centimetre];
-    for _ in 0..50 {
+    for _ in 0..num_of_questions {
         let current_unit = xs.choose(&mut rand::thread_rng());
         let current_unit = current_unit.unwrap();
         let q = UnitConvertQuestion::new(*current_unit);
