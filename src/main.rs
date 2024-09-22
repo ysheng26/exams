@@ -6,11 +6,14 @@ use question::*;
 
 fn main() {
     let mut qs: Vec<Box<dyn Question>> = Vec::new();
-    unit_convert::add_questions(&mut qs);
+    // unit_convert::add_questions(&mut qs);
     arithmetic::add_questions(&mut qs);
 
     for (i, q) in qs.iter().enumerate() {
-        // println!("{}", q.question(i + 1));
+        println!("{}", q.question(i + 1));
+    }
+    println!("---------------------------");
+    for (i, q) in qs.iter().enumerate() {
         println!("{}", q.answer(i + 1));
     }
 }
