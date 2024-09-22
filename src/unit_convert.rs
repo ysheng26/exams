@@ -32,7 +32,6 @@ impl std::fmt::Display for Unit {
 }
 
 struct UnitConvertQuestion {
-    id: i32,
     lhs: f32,
     lhs_unit: Unit,
     rhs: f32,
@@ -40,25 +39,25 @@ struct UnitConvertQuestion {
 }
 
 impl Question for UnitConvertQuestion {
-    fn question(&self) -> String {
+    fn question(&self, id: usize) -> String {
         let res = format!(
-            "Question {}: {} {} = ? {}",
-            self.id, self.lhs, self.lhs_unit, self.rhs_unit,
+            "Question {id}: {} {} = ? {}",
+            self.lhs, self.lhs_unit, self.rhs_unit
         );
         res
     }
 
-    fn answer(&self) -> String {
+    fn answer(&self, id: usize) -> String {
         let res = format!(
-            "Answer {}: {} {} = {} {}",
-            self.id, self.lhs, self.lhs_unit, self.rhs, self.rhs_unit
+            "Answer {id}: {} {} = {} {}",
+            self.lhs, self.lhs_unit, self.rhs, self.rhs_unit
         );
         res
     }
 }
 
 impl UnitConvertQuestion {
-    fn new(id: i32, lhs_unit: Unit) -> Self {
+    fn new(lhs_unit: Unit) -> Self {
         use Unit::*;
         let hashmap = HashMap::from([
             (Meter, Centimetre),
@@ -81,7 +80,6 @@ impl UnitConvertQuestion {
 
         let rhs_unit = *hashmap.get(&lhs_unit).unwrap();
         UnitConvertQuestion {
-            id,
             lhs,
             lhs_unit,
             rhs,
@@ -94,10 +92,10 @@ pub(crate) fn add_questions(qs: &mut Vec<Box<dyn Question>>) {
     use Unit::*;
     // let xs = vec![Meter, Centimetre, Pound, Ounce, Foot, Inch];
     let xs = vec![Meter, Centimetre];
-    for i in 0..50 {
+    for _ in 0..50 {
         let current_unit = xs.choose(&mut rand::thread_rng());
         let current_unit = current_unit.unwrap();
-        let q = UnitConvertQuestion::new(i + 1, *current_unit);
+        let q = UnitConvertQuestion::new(*current_unit);
         qs.push(Box::new(q));
     }
 }

@@ -1,4 +1,4 @@
 pub(crate) trait Question {
-    fn question(&self) -> String;
-    fn answer(&self) -> String;
+    fn question(&self, q_num: usize) -> String;
+    fn answer(&self, q_num: usize) -> String;
 }
